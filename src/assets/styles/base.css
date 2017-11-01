@@ -11,6 +11,10 @@
 body{
   font: 14px "微软雅黑", Arial, Helvetica, sans-serif;
   background: url('../image/top.jpg') no-repeat center top #075498;
+<<<<<<< HEAD
+=======
+  color:#fff;
+>>>>>>> 454d61ad4faa7c7ccc1716f64acd7cdd6e17272e
 }
 header,article,footer{
   width: 1200px;

@@ -1,13 +1,37 @@
 <template>
   <div class="hello">
+<<<<<<< HEAD
     <bcard :title="title" :content="content"></bcard>
+=======
+    <aaa></aaa>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+>>>>>>> 454d61ad4faa7c7ccc1716f64acd7cdd6e17272e
   </div>
   
 </template>
 
 <script>
+<<<<<<< HEAD
 import bcard from '@/components/common/card'
 
+=======
+import '@/components/aaa'
+>>>>>>> 454d61ad4faa7c7ccc1716f64acd7cdd6e17272e
 export default {
   name: 'HelloWorld',
   data () {
@@ -16,8 +40,19 @@ export default {
       content: '此模板为PSD设计稿，复古风格。首页主要突出产品，以及公司简介。手绘灯作为头部背景图片，这个比较特别。html可以做出灯一闪一闪的效果，或者说旁边有个按钮...'
     }
   },
+<<<<<<< HEAD
   components: {
     bcard
+=======
+  created () {
+    this.$http.get('api/demo')
+    .then(function (res) {
+      console.log('ok')
+    })
+    .catch(function (err) {
+      if (err) {}
+    })
+>>>>>>> 454d61ad4faa7c7ccc1716f64acd7cdd6e17272e
   }
 }
 </script>
