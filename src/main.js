@@ -3,8 +3,15 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
+import axiso from 'axios'
+import './mocks/index'
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
+import './assets/styles/base.css'
 Vue.config.productionTip = false
+Vue.prototype.$http = axiso
+
+Vue.use(iView)
 
 /* eslint-disable no-new */
 new Vue({
