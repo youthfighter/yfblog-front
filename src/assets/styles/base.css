@@ -1,0 +1,22 @@
+@media screen and (max-width: 1200px) {
+  header,article,footer {
+    width: 1200px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  header,article,footer {
+    width: 1000px;
+  }
+}
+body{
+  font: 14px "微软雅黑", Arial, Helvetica, sans-serif;
+  background: url('../image/top.jpg') no-repeat center top #075498;
+}
+header,article,footer{
+  width: 1200px;
+  margin: auto;
+  overflow: hidden;
+}
+article{
+  background: url('../image/articlebg.png') repeat;
+}
