@@ -1,43 +1,11 @@
 <template>
   <div id="app">
-<<<<<<< HEAD
-    <appHeader></appHeader>
-=======
-    <header>
-      <div class="blog-name">
-        <router-link to="/">YOUTH·FIGHTER</router-link>
-      </div>
-      <nav class="top-nav">
-        <router-link to="/">首页</router-link>
-        <router-link to="/">关于我</router-link>
-        <router-link to="/">关于她</router-link>
-        <router-link to="/">学无止境</router-link>
-        <router-link to="/">留言</router-link>
-      </nav>
-    </header>
->>>>>>> 454d61ad4faa7c7ccc1716f64acd7cdd6e17272e
-    <article>
-      <div class="container">
-        <router-view/>
-      </div>      
-    </article>    
-<<<<<<< HEAD
-    <appFooter></appFooter>
-=======
-    <footer>生命不息，奋斗不止</footer>
->>>>>>> 454d61ad4faa7c7ccc1716f64acd7cdd6e17272e
+    <router-view/>
   </div>
 </template>
 
 <script>
-import appHeader from '@/components/common/header'
-import appFooter from '@/components/common/footer'
 export default {
-  name: 'app',
-  components: {
-    appHeader,
-    appFooter
-  }
 }
 </script>
 
@@ -46,44 +14,6 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-<<<<<<< HEAD
-}
-
-=======
-}
-.blog-name{
-  padding: 40px 0;
-  text-align: left;
-}
-header a{
-  color: white;
-  text-align: left;
-}
-header a:link, a:visited, a:active {
-    text-decoration: none;
-    color: #fff;
-}
-.blog-name a{
-  font-size: 66px;
-}
-.top-nav{
-  padding-bottom: 30px;
-}
-.top-nav a{
-  margin-right: 30px;
-  font-size: 20px;
-}
-footer{
-  text-align: center;
-  padding: 20px 0;
-  font-size: 16px;
-}
->>>>>>> 454d61ad4faa7c7ccc1716f64acd7cdd6e17272e
-.container{
-    background: url('./assets/image/articlebg.png') repeat;
-    overflow: hidden;
-    margin: 20px;
-    box-shadow: #075498 0px 1px 10px;
 }
 
 </style>

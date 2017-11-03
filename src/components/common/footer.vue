@@ -1,5 +1,5 @@
 <template>
-  <footer>生命不息，奋斗不止</footer>
+  <footer>-- 生命不息，奋斗不止 --</footer>
 </template>
 
 <script>

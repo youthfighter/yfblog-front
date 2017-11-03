@@ -3,7 +3,7 @@
     <div class="blog-name">
       <router-link to="/">{{ name }}</router-link>
     </div>
-    <nav class="top-nav" :a="navs">
+    <nav v-if="shownav !== false" class="top-nav" :a="navs">
       <router-link v-for="item in navs" :key="item.name" v-bind:to="item.link">{{ item.name }}</router-link>
     </nav>
   </header>
@@ -12,6 +12,7 @@
 <script>
 export default {
   name: 'appHeader',
+  props: ['shownav'],
   data () {
     return {
       'name': 'YOUTH·FIGHTER',
