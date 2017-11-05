@@ -2,7 +2,7 @@
   <Card style="width:360px" :shadow='true'>
     <div style="text-align:center;background: #ececec">
         <img src="../../assets/image/t02.jpg">
-        <div class="title">{{ title }}</div>
+        <div class="title">{{ title }}{{index}}</div>
         <div class="content">{{ content }}</div>
     </div>
   </Card>
@@ -11,7 +11,7 @@
 <script>
 export default {
   name: 'card',
-  props: ['title', 'content']
+  props: ['title', 'content', 'index']
 }
 </script>
 <style scoped>

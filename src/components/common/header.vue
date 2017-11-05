@@ -1,9 +1,9 @@
 <template>
   <header>
     <div class="blog-name">
-      <router-link to="/">{{ name }}</router-link>
+      <router-link :to="indexurl">{{ name }}</router-link>
     </div>
-    <nav v-if="shownav !== false" class="top-nav" :a="navs">
+    <nav v-if="shownav !== false" class="top-nav">
       <router-link v-for="item in navs" :key="item.name" v-bind:to="item.link">{{ item.name }}</router-link>
     </nav>
   </header>
@@ -12,7 +12,7 @@
 <script>
 export default {
   name: 'appHeader',
-  props: ['shownav'],
+  props: ['shownav', 'indexurl'],
   data () {
     return {
       'name': 'YOUTH·FIGHTER',
