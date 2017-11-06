@@ -1,6 +1,6 @@
 <template>
   <div id="blog">
-      <appHeader></appHeader>
+      <appHeader :indexurl="indexurl"></appHeader>
       <article>
         <div class="container">
           <router-view/>
@@ -15,6 +15,11 @@ import appHeader from '@/components/common/header'
 import appFooter from '@/components/common/footer'
 export default {
   name: 'app',
+  data () {
+    return {
+      indexurl: '/youthfighter'
+    }
+  },
   components: {
     appHeader,
     appFooter

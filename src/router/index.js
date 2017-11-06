@@ -8,7 +8,7 @@ import managementRouter from './managementRouter'
 import blogRouter from './blogRouter'
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -33,3 +33,24 @@ export default new Router({
     }
   ]
 })
+const flag = true
+router.beforeEach((to, from, next) => {
+  console.log(to, from)
+  if (to.fullPath.startsWith('/management')) {
+    if (!flag) {
+      next({
+        path: '/management/login'
+      })
+    } else if (flag && to.fullPath.startsWith('/management/login')) {
+      next({
+        path: from.fullPath
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
+
+export default router

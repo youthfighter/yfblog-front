@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import axiso from 'axios'
 import iView from 'iview'
+import './mocks/index'
 import 'iview/dist/styles/iview.css'
 import './assets/styles/base.css'
 Vue.config.productionTip = false
