@@ -1,6 +1,6 @@
 <template>
     <div class="add-article">
-        <Form :model="formItem" :rules="formRule" :label-width="50">
+        <Form :model="formItem" :rules="formRule" :label-width="70">
             <FormItem label="标题:" prop="title">
                 <Input v-model="formItem.title" placeholder="请输入文章的标题" style="width:600px"></Input>
             </FormItem>

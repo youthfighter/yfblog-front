@@ -23,7 +23,8 @@
               </Input>
             </FormItem>
             <FormItem>
-              <Button @click="handleSubmit" type="primary" long>登录</Button>
+              <Button @click="handleSubmit" type="primary" long v-if='loginFlag' :a='loginFlag'>登录</Button>
+              <Button @click="handleSubmit" type="primary" long v-else disabled>登录</Button>
             </FormItem>
           </Form>
           <p class="login-tip">{{errmsg}}</p>
@@ -56,17 +57,27 @@ export default {
     handleSubmit () {
       let _this = this
       this.$http.post('/api/mangement/login', {
-        userName: _this.form.userName,
+        name: _this.form.userName,
         password: md5(_this.form.password)
       })
         .then(res => {
-          _this.$router.push('/management')
+          _this.$router.replace('/management')
         })
         .catch(err => {
+          console.log(err)
           if (err) {
-            _this.errmsg = err.message
+            _this.errmsg = err.response.data.errMsg
           }
         })
+    }
+  },
+  computed: {
+    loginFlag () {
+      if (this.form.password && this.form.userName) {
+        return true
+      } else {
+        return false
+      }
     }
   }
 }
@@ -96,5 +107,10 @@ html,body{
     -webkit-transform: translateY(-70%);
     transform: translateY(-70%);
     width: 300px;
+}
+.login-tip{
+  height: 22px;
+  line-height: 22px;
+  color: red;
 }
 </style>

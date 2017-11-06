@@ -1,25 +1,26 @@
 <template>
   <div id="management">
-      <appHeader :shownav="false" :indexurl="indexurl"></appHeader>
-      <div class="container">
-        <div class="nav">
-          <appNav :selected="selected"></appNav>
-        </div>
-        <div class="content">
-          <appBreadcrumb :location="location" class="app-breadcrumb"></appBreadcrumb>
-          <router-view/>
-        </div>   
-        <div class="clearfix"></div>
+    <div class="left-nav">
+      <router-link to="/management" class="blog-name">YOUTH·FIGHTER</router-link>
+      <appNav :selected="selected"></appNav>
+    </div>
+    <div class="main-header">
+      <appBreadcrumb :location="location" class="app-breadcrumb"></appBreadcrumb>
+      <div class="main-user">
+        <appUser></appUser>
       </div>
-      <appFooter></appFooter>
+      <div class="clearfix"></div>
+    </div>      
+      <div class="container">
+        <router-view/>
+      </div>
   </div>
 </template>
 
 <script>
-import appHeader from '@/components/common/header'
-import appFooter from '@/components/common/footer'
 import appBreadcrumb from '@/components/common/breadcrumb'
 import appNav from '@/components/management/nav'
+import appUser from '@/components/management/user'
 import configs from '@/configs'
 export default {
   name: 'app',
@@ -31,12 +32,14 @@ export default {
     }
   },
   components: {
-    appHeader,
-    appFooter,
     appNav,
-    appBreadcrumb
+    appBreadcrumb,
+    appUser
   },
   methods: {
+    routeChange () {
+      this.refreshNav()
+    },
     refreshNav () {
       let path = this.$route.path
       let location = this.findPath(configs.management, path)
@@ -65,7 +68,7 @@ export default {
     this.refreshNav()
   },
   watch: {
-    '$route': 'refreshNav'
+    '$route': 'routeChange'
   }
 }
 </script>
@@ -74,32 +77,63 @@ export default {
 <style>
 body{
   font: 14px "微软雅黑", Arial, Helvetica, sans-serif;
-  background: url('../../assets/image/top.jpg') no-repeat center top #075498;
+  background-color: #f0f0f0
 }
-header,article,footer{
-  width: 1200px;
-  margin: auto;
-  overflow: hidden;
+.main-header{
+  position: fixed;
+  left: 240px;
+  top: 0;
+  right: 0;
+  height: 60px;
+  border-bottom: 1px solid #fff;
+  background-color: #fff;
+  padding: 0 20px;
+  float: left;
+  z-index: 10
 }
-article{
-  background: url('../../assets/image/articlebg.png') repeat;
+.left-nav{
+  position: fixed;
+  width: 240px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #495060;
+  z-index: 100
+}
+.blog-name{
+  display: block;
+  text-align: center;
+  height: 60px;
+  font-size: 24px;
+  line-height: 60px;
+  color: #fff;
+}
+.blog-name:hover,.blog-name:link,.blog-name:visited{
+  text-decoration:none; 
+  color:#fff; 
 }
 .container{
-  width: 1200px;
-  margin: 0 auto;
-  background-color: rgb(255, 255, 255)
-}
-.nav{
-  width: 240px;
-  float: left;
-}
-.content{
-  padding: 10px 20px 20px;
-  float: left;
-  width: 960px;
+  position: absolute;
+  top : 70px;
+  left: 260px;
+  right: 10px;
+  bottom: 10px;
+  background-color: #fff;
+  overflow: auto;
+  padding: 10px;
+  z-index: 1;
 }
 .app-breadcrumb{
   font-size: 14px;
-  margin-bottom: 30px;
+  line-height: 60px;
+  display: inline-block;
+}
+.main-user{
+  float: right;
+  display: inline-block;
+  height: 60px;
+  line-height: 60px;
+  font-size: 16px;
 }
 </style>
