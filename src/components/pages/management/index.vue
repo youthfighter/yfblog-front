@@ -1,10 +1,18 @@
 <template>
-    <div class="index">
-      <router-link to="/management/article/add">新增</router-link>
-    </div>            
+  <Upload action="//jsonplaceholder.typicode.com/posts/" @on-success='ok' @on-error='err'>
+    <Button type="ghost" icon="ios-cloud-upload-outline">上传图片</Button>
+  </Upload>          
 </template>
 <script>
 export default {
+  methods: {
+    ok () {
+      console.log('ok')
+    },
+    err () {
+      console.log('err')
+    }
+  }
 }
 </script>
 <style scoped>

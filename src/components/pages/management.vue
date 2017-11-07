@@ -21,7 +21,7 @@
 import appBreadcrumb from '@/components/common/breadcrumb'
 import appNav from '@/components/management/nav'
 import appUser from '@/components/management/user'
-import configs from '@/configs'
+import {menuTree, context} from '@/configs'
 export default {
   name: 'app',
   data () {
@@ -42,8 +42,8 @@ export default {
     },
     refreshNav () {
       let path = this.$route.path
-      let location = this.findPath(configs.management, path)
-      location ? this.location = [{label: '首页', href: '/management'}, ...location] : this.location = [{label: '首页', href: '/management'}]
+      let location = this.findPath(menuTree, path)
+      location ? this.location = [{label: '首页', href: context}, ...location] : this.location = [{label: '首页', href: '/management'}]
       this.selected = this.location[this.location.length - 1].href
     },
     findPath (array, path) {
@@ -74,10 +74,12 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-body{
+<style scoped>
+#management{
   font: 14px "微软雅黑", Arial, Helvetica, sans-serif;
-  background-color: #f0f0f0
+  background-color: #f0f0f0;
+  height: 100%;
+  width: 100%;
 }
 .main-header{
   position: fixed;

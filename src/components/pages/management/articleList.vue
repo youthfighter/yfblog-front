@@ -108,6 +108,7 @@ export default {
       let _this = this
       this.$http.get('/api/article/all', {pageNum, size})
         .then(res => {
+          console.log('getar')
           _this.data = res.data.article
           _this.total = res.data.total
         })

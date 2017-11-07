@@ -14,12 +14,12 @@
     </div>     
 </template>
 <script>
-import configs from '@/configs'
+import {menuTree} from '@/configs'
 export default {
   data () {
     return {
       theme1: 'dark',
-      menu: configs.management
+      menu: menuTree
     }
   },
   props: ['selected', 'height'],

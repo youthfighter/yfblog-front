@@ -28,8 +28,10 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-body{
+<style scoped>
+#blog{
+  height: 100%;
+  width: 100%;
   font: 14px "微软雅黑", Arial, Helvetica, sans-serif;
   background: url('../../assets/image/top.jpg') no-repeat center top #075498;
 }
