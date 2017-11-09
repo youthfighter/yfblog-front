@@ -1,0 +1,90 @@
+<template>
+  <div class="article-content">
+    <Card>
+      <h1>{{article.title}}</h1>
+      <p class="preview-publish-time">
+        <Icon type="android-alarm-clock"></Icon>
+        发布时间：{{article.publishDatetime}}
+      </p>
+      <div class="preview-tags-con">
+        <b class="preview-tip">
+          <Icon type="ios-pricetags-outline"></Icon>
+          &nbsp;标签：
+          <Tag color="blue" v-if="index%4 == 0" v-for="(item,index) in article.type" :key="item._id">
+            <router-link color="blue" :to="`/youthfighter/article/type/${item._id}`">{{item.tag}}</router-link>
+          </Tag>
+          <Tag color="green" v-if="index%4 == 1" v-for="(item,index) in article.type" :key="item._id">
+            <router-link color="blue" :to="`/youthfighter/article/type/${item._id}`">{{item.tag}}</router-link>
+          </Tag>
+          <Tag color="red" v-if="index%4 == 2" v-for="(item,index) in article.type" :key="item._id">
+            <router-link color="blue" :to="`/youthfighter/article/type/${item._id}`">{{item.tag}}</router-link>
+          </Tag>
+          <Tag color="yellow" v-if="index%4 == 3" v-for="(item,index) in article.type" :key="item._id">
+            <router-link color="blue" :to="`/youthfighter/article/type/${item._id}`">{{item.tag}}</router-link>
+          </Tag>
+        </b>
+      </div>
+      <div class="preview-content-con" v-html="article.content">
+      </div>
+    </Card>
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      article: {},
+      spinShow: true
+    }
+  },
+  created () {
+    this.getArticle()
+  },
+  methods: {
+    getArticle () {
+      let _this = this
+      let _id = _this.$route.params.id
+      _this.$http.get(`/api/article/one`, {_id})
+        .then(res => {
+          _this.spinShow = false
+          _this.article = res.data
+        })
+        .catch(err => {
+          if (err.statusCode === 'article.not.find') {
+            _this.$router.push('/youthfighter/404')
+          } else {
+            _this.$router.push('/youthfighter/500')
+          }
+        })
+    }
+  },
+  watch: {
+    '$route': 'getArticle'
+  }
+}
+</script>
+<style scoped>
+.article-content{
+  position: relative;
+  min-height: 300px;
+}
+.preview-publish-time {
+    font-size: 12px;
+    color: gray;
+    margin-top: 5px;
+}
+.preview-tags-con {
+    padding: 5px 0;
+    margin: 10px 0;
+}
+.preview-tip {
+    font-size: 12px;
+    color: #c3c3c3;
+}
+.preview-content-con {
+    border-top: 1px solid #edeff1;
+    padding: 12px 0 20px;
+    margin-bottom: 20px;
+}
+</style>

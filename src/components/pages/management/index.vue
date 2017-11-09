@@ -1,10 +1,18 @@
 <template>
-  <Upload action="//jsonplaceholder.typicode.com/posts/" @on-success='ok' @on-error='err'>
-    <Button type="ghost" icon="ios-cloud-upload-outline">上传图片</Button>
-  </Upload>          
+  <div class="index">
+    <Row :gutter="16">
+      <Col span="12">
+        <appToDo></appToDo>
+      </Col>
+    </Row>
+  </div>       
 </template>
 <script>
+import appToDo from '@/components/management/todo'
 export default {
+  components: {
+    appToDo
+  },
   methods: {
     ok () {
       console.log('ok')

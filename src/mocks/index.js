@@ -52,5 +52,42 @@ Mock.mock('/api/article/one', 'delete', {
 Mock.mock('/api/mangement/login', 'post', {
   'href': '/management'
 })
-
+Mock.mock('/api/todo/insert', 'post', {
+  '_id': '@id',
+  'createDate': '@datetime',
+  'author': 'youthfighter',
+  'todo': '@cparagraph',
+  'done|1-2': true
+})
+Mock.mock('/api/todo/all', 'get', {
+  'toDoList|0-1': [{
+    '_id': '@id',
+    'createDate': '@datetime',
+    'author': 'youthfighter',
+    'todo': '@cparagraph',
+    'done|1-2': true
+  }]
+})
+Mock.mock('/api/article/new', 'get', {
+  'newArticle|3-5': [{
+    '_id': '@id',
+    'name': '@ctitle'
+  }]
+})
+Mock.mock('/api/article/hot', 'get', {
+  'hotArticle|3-5': [{
+    '_id': '@id',
+    'name': '@ctitle'
+  }]
+})
+Mock.mock('/api/article/one', 'get', {
+  '_id': '@id',
+  'title': '@ctitle',
+  'content': '@cparagraph',
+  'type|1-4': [{
+    '_id': '@id',
+    'tag': '@cname'
+  }],
+  'publishDatetime': '@datetime("yyyy-MM-DD -- HH:mm:ss")'
+})
 export default Mock

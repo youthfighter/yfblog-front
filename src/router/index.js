@@ -35,20 +35,25 @@ const router = new Router({
 })
 /* 路由控制 */
 router.beforeEach((to, from, next) => {
-  if (to.fullPath.startsWith('/management2')) {
-    /* 管理页面路由控制 */
-    if (to.fullPath.startsWith('/management/login')) {
-      next()
-    } else {
-      if (getCookie('SESSION_ID')) {
+  /* 没有匹配到路由页面 */
+  if (to.matched.length === 0) {
+    next('/youthfighter/404')
+  } else {
+    if (to.fullPath.startsWith('/management2')) {
+      /* 管理页面路由控制 */
+      if (to.fullPath.startsWith('/management/login')) {
         next()
       } else {
-        next({path: '/management/login'})
+        if (getCookie('SESSION_ID')) {
+          next()
+        } else {
+          next({path: '/management/login'})
+        }
       }
+    } else {
+      /* 非管理页面路由控制 */
+      next()
     }
-  } else {
-    /* 非管理页面路由控制 */
-    next()
   }
 })
 
