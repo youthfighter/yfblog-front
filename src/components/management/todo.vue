@@ -68,7 +68,7 @@ export default {
       }
       let _this = this
       _this.saveLoading = true
-      _this.$http.post('/api/todo/insert', {'todo': _this.newToDoThings})
+      _this.$http.post('/api/tasks/', {'task': _this.newToDoThings})
         .then(res => {
           _this.newToDoThings = ''
           _this.addToDoDialog = false

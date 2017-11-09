@@ -22,10 +22,5 @@ export default [
     path: '/youthfighter/500',
     name: '500',
     component: error
-  },
-  {
-    path: '/youthfighter/500',
-    name: '500',
-    component: error
   }
 ]

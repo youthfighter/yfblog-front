@@ -1,4 +1,4 @@
-import index from '@/components/pages/management/index'
+import home from '@/components/pages/management/index'
 import notFound from '@/components/pages/management/404'
 import articleList from '@/components/pages/management/articleList'
 import addOrEditArticle from '@/components/pages/management/addOrEditArticle'
@@ -8,9 +8,9 @@ import bgimage from '@/components/pages/management/loginBgImage'
 const context = '/management'
 export default [
   {
-    path: context,
-    name: 'index',
-    component: index
+    path: `${context}/home`,
+    name: 'home',
+    component: home
   },
   {
     path: `${context}/404`,

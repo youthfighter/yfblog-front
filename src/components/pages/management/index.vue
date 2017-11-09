@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <Row :gutter="16">
-      <Col span="12">
+      <Col span="8">
         <appToDo></appToDo>
       </Col>
     </Row>
@@ -13,14 +13,7 @@ export default {
   components: {
     appToDo
   },
-  methods: {
-    ok () {
-      console.log('ok')
-    },
-    err () {
-      console.log('err')
-    }
-  }
+  methods: {}
 }
 </script>
 <style scoped>

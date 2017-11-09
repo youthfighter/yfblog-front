@@ -45,7 +45,7 @@ export default {
     getArticle () {
       let _this = this
       let _id = _this.$route.params.id
-      _this.$http.get(`/api/article/one`, {_id})
+      _this.$http.get(`/api/articles/${_id}`)
         .then(res => {
           _this.spinShow = false
           _this.article = res.data

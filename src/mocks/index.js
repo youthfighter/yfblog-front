@@ -31,7 +31,7 @@ Mock.mock('/api/article/edit', 'post', {
   'author': '@cname',
   'hidden|1-2': true
 })
-Mock.mock('/api/article/one', 'get', {
+Mock.mock(/\/api\/articles\/[A-Za-z0-9]{1,40}/, 'get', {
   '_id': '@id',
   'createDate': '@datetime',
   'lastUpdate': '@datetime',
@@ -52,7 +52,7 @@ Mock.mock('/api/article/one', 'delete', {
 Mock.mock('/api/mangement/login', 'post', {
   'href': '/management'
 })
-Mock.mock('/api/todo/insert', 'post', {
+Mock.mock('/api/tasks/', 'post', {
   '_id': '@id',
   'createDate': '@datetime',
   'author': 'youthfighter',

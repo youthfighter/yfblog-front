@@ -30,6 +30,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #blog{
+  min-height : 100%;
   font: 14px "微软雅黑", Arial, Helvetica, sans-serif;
   background: url('../../assets/image/top.jpg') no-repeat center top #075498;
 }

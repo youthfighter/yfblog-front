@@ -12,7 +12,7 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      redirect: { name: 'blog' }
+      redirect: '/youthfighter'
     },
     {
       path: '/youthfighter',
@@ -22,6 +22,10 @@ const router = new Router({
     },
     {
       path: '/management',
+      redirect: '/management/home'
+    },
+    {
+      path: '/management/home',
       name: 'management',
       component: management,
       children: managementRouter
@@ -36,6 +40,7 @@ const router = new Router({
 /* 路由控制 */
 router.beforeEach((to, from, next) => {
   /* 没有匹配到路由页面 */
+  console.log(to.matched.length)
   if (to.matched.length === 0) {
     next('/youthfighter/404')
   } else {
