@@ -12,8 +12,7 @@ import appToDo from '@/components/management/todo'
 export default {
   components: {
     appToDo
-  },
-  methods: {}
+  }
 }
 </script>
 <style scoped>

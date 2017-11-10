@@ -11,6 +11,7 @@ import axios from 'axios'
 import { delCookie } from '../src/utils/cookie'
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
+Vue.prototype.user = {}
 
 Vue.use(iView)
 /* 定义request拦截器 */

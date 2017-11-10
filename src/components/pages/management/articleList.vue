@@ -47,18 +47,7 @@ export default {
                     this.editArticle(params.row._id)
                   }
                 }
-              }, '编辑'),
-              h('Button', {
-                props: {
-                  type: 'error',
-                  size: 'small'
-                },
-                on: {
-                  click: () => {
-                    this.deleteArticle(params.row._id)
-                  }
-                }
-              }, '删除')
+              }, '编辑')
             ])
           }
         }
@@ -74,13 +63,12 @@ export default {
     addArticle () {
       this.$router.push('/management/article/add')
     },
-    deleteArticle (_id) {
+    /* 暂时不提供删除 */
+/*     deleteArticle (_id) {
       let _this = this
       _this.$Modal.confirm({
         title: '警告',
         content: '您确认删除该条数据？',
-        okText: '确定',
-        cancelText: '取消',
         onOk () {
           _this.$http.delete('/api/article/one', {_id})
             .then(res => {
@@ -100,17 +88,20 @@ export default {
             })
         }
       })
-    },
+    }, */
     editArticle (id) {
       this.$router.push(`/management/article/edit/${id}`)
     },
     getArticle (pageNum = 1, size = 20) {
       let _this = this
-      this.$http.get('/api/article/all', {pageNum, size})
+      let author = _this.user.name
+      if (!author) _this.$router.push('/management/login')
+      this.$http.get('/api/articles', {pageNum, size, author})
         .then(res => {
-          console.log('getar')
-          _this.data = res.data.article
-          _this.total = res.data.total
+          if (res.data) {
+            _this.data = res.data.article
+            _this.total = res.data.total
+          }
         })
         .catch(err => {
           if (err) {

@@ -49,20 +49,50 @@ export default {
   },
   methods: {
     save () {
+      this.saveBtnStatus = false
+      this.saveBtnText = '保存中...'
+      if (this.formItem.id) this.updateArticle()
+      else this.insertArticle()
+    },
+    insertArticle () {
       let _this = this
-      _this.saveBtnStatus = false
-      _this.saveBtnText = '保存中...'
-      this.$http.post('/api/article/add', {
+      this.$http.post('/api/articles', {
         title: _this.formItem.title,
-        content: _this.formItem.content
+        content: _this.formItem.content,
+        hidden: _this.formItem.hidden
       })
       .then(res => {
         this.$router.push('/management/article/list')
       })
       .catch(err => {
+        _this.saveBtnStatus = true
+        _this.saveBtnText = '保存'
         if (err) {
           this.$Message.error({
             content: '新增失败',
+            duration: 10,
+            closable: true
+          })
+        }
+      })
+    },
+    updateArticle () {
+      let _this = this
+      let id = this.formItem.id
+      this.$http.put(`/api/articles/${id}`, {
+        title: _this.formItem.title,
+        content: _this.formItem.content,
+        hidden: _this.formItem.hidden
+      })
+      .then(res => {
+        this.$router.push('/management/article/list')
+      })
+      .catch(err => {
+        _this.saveBtnStatus = true
+        _this.saveBtnText = '保存'
+        if (err) {
+          this.$Message.error({
+            content: '修改失败',
             duration: 10,
             closable: true
           })
@@ -77,14 +107,13 @@ export default {
     let id = this.$route.params.id
     let _this = this
     if (id) {
-      this.id = id
-      this.$http.get('/api/article/one', {
+      this.formItem.id = id
+      this.$http.get(`/api/articles/${id}`, {
         id: _this.id,
         title: _this.formItem.title,
         content: _this.formItem.content
       })
       .then(res => {
-        console.log(res)
         _this.formItem.title = res.data.title
         _this.formItem.id = res.data._id
         _this.formItem.content = res.data.content

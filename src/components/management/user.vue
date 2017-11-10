@@ -1,7 +1,7 @@
 <template>
   <Dropdown @on-click="userCtr">
     <a href="javascript:void(0)">
-      youthfighter
+      {{username}}
       <Icon type="arrow-down-b"></Icon>
     </a>
     <DropdownMenu slot="list">
@@ -11,26 +11,41 @@
   </Dropdown>
 </template>
 <script>
-  export default {
-    methods: {
-      userCtr (name) {
-        switch (name) {
-          case 'changepsw':
-            this.changePsw()
-            break
-          case 'layout':
-            this.layout()
-            break
-        }
-      },
-      changePsw () {
-        this.$router.push('/management/user/changePsw')
-      },
-      layout () {
-        console.log('layout')
+import { getUsername,  } from '../../utils/storage'
+export default {
+  data () {
+    return {
+      username: getUsername()
+    }
+  },
+  methods: {
+    userCtr (name) {
+      switch (name) {
+        case 'changepsw':
+          this.changePsw()
+          break
+        case 'layout':
+          this.layout()
+          break
       }
+    },
+    changePsw () {
+      this.$router.push('/management/user/changePsw')
+    },
+    layout () {
+      let _this = this
+      _this.$http.delete('/api/session')
+        .then(res => {
+          this.$router.push('/management/login')
+        })
+        .catch(err => {
+          if (err) {
+            this.$Message.error('退出登录失败！！')
+          }
+        })
     }
   }
+}
 </script>
 <<style scoped>
 </style>

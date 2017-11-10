@@ -9,7 +9,7 @@
         <div class="form-con">
           <Form ref="loginForm" :model="form" :rules="rules">
             <FormItem prop="userName">
-              <Input v-model="form.userName" placeholder="请输入用户名" size="large">
+              <Input v-model="form.userName" placeholder="请输入用户名" size="large" autofocus>
                 <span slot="prepend">
                   <Icon :size="16" type="person"></Icon>
                 </span>
@@ -23,7 +23,7 @@
               </Input>
             </FormItem>
             <FormItem>
-              <Button @click="handleSubmit" type="primary" long v-if='loginFlag' :a='loginFlag'>登录</Button>
+              <Button @click="handleSubmit" type="primary" long v-if='loginFlag'>登录</Button>
               <Button @click="handleSubmit" type="primary" long v-else disabled>登录</Button>
             </FormItem>
           </Form>
@@ -35,6 +35,7 @@
 </template>
 <script>
 import md5 from 'md5'
+import { setUsername } from '../../../utils/storage'
 export default {
   data () {
     return {
@@ -56,15 +57,19 @@ export default {
   methods: {
     handleSubmit () {
       let _this = this
-      this.$http.post('/api/mangement/login', {
+      this.$http.post('/api/session', {
         name: _this.form.userName,
         password: md5(_this.form.password)
       })
         .then(res => {
-          _this.$router.replace('/management')
+          if (res.data.user) {
+            setUsername(res.data.user.name)
+            _this.$router.replace('/management/home')
+          } else {
+            _this.errmsg = '未知错误'
+          }
         })
         .catch(err => {
-          console.log(err)
           if (err) {
             _this.errmsg = err.response.data.errMsg
           }

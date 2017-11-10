@@ -3,26 +3,26 @@
     <Card>
       <p slot="title">
         <Icon type="android-checkbox-outline"></Icon>
-        代办事项{{"("+toDoList.length+")"}}
+        代办事项<span>{{"("+toDoCount+")"}}</span>
       </p>
       <a href="#" slot="extra" @click.prevent="showDialog">
         <Icon type="plus-round"></Icon>
       </a>
       <ul class="todolist" v-if="initLoading === 'success' && toDoList.length > 0">
-        <li v-for="item in toDoList" :key="item._id" @click="item.done = !item.done">
+        <li v-for="item in toDoList" :key="item._id" @click="setTaskDone(item)">
           <Row>
             <Col span="2" style="">
               <Checkbox v-model="item.done" :id="item._id"></Checkbox></Col>
             <Col span="22" class="to-do-things done" v-if="item.done">
-              {{item.todo}}
+              {{item.task}}
             </Col>
             <Col span="22" class="to-do-things" v-else>
-              {{item.todo}}
+              {{item.task}}
             </Col>
           </Row>
         </li>
       </ul>
-      <div class="todolist init-tip" v-if="toDoList.length === 0">
+      <div class="todolist init-tip" v-if="initLoading != 'error' && toDoList.length === 0">
         没有任务,<a href="#" @click.prevent="showDialog">点击添加</a>
       </div>
       <div class="todolist init-tip" v-if="initLoading === 'error'">
@@ -54,6 +54,18 @@ export default {
       initLoading: 'init'
     }
   },
+  computed: {
+    toDoCount () {
+      if (Array.isArray(this.toDoList) && this.toDoList.length > 0) {
+        let num = 0
+        this.toDoList.forEach(value => {
+          if (!value.done) num++
+        })
+        return num
+      }
+      return 0
+    }
+  },
   created () {
     this.getToDoList()
   },
@@ -61,6 +73,7 @@ export default {
     showDialog () {
       this.addToDoDialog = true
     },
+
     save () {
       if (this.newToDoThings === '') {
         this.addToDoDialog = false
@@ -68,13 +81,13 @@ export default {
       }
       let _this = this
       _this.saveLoading = true
-      _this.$http.post('/api/tasks/', {'task': _this.newToDoThings})
+      _this.$http.post('/api/tasks', {'task': _this.newToDoThings})
         .then(res => {
           _this.newToDoThings = ''
           _this.addToDoDialog = false
           _this.$Message.success('添加成功！')
           _this.saveLoading = true
-          _this.toDoList.unshift(res.data)
+          if (res.data) _this.toDoList.unshift(res.data)
         })
         .catch(err => {
           if (err) {
@@ -87,9 +100,9 @@ export default {
     getToDoList () {
       let _this = this
       _this.initLoading = 'init'
-      _this.$http.get('/api/todo/all')
+      _this.$http.get('/api/tasks', {done: true})
         .then(res => {
-          _this.toDoList = res.data.toDoList
+          if (res.data.toDoList) _this.toDoList = res.data.toDoList
           _this.initLoading = 'success'
         })
         .catch(err => {
@@ -97,6 +110,27 @@ export default {
             _this.initLoading = 'error'
           }
         })
+    },
+    setTaskDone (item) {
+      let _this = this
+      if (item.done) {
+        this.$Message.info('已完成任务不可取消')
+        return
+      }
+      this.$Modal.confirm({
+        title: '警告',
+        content: `确定任务【${item.task}】已完成？`,
+        onOk () {
+          _this.$http.patch(`/api/tasks/${item._id}`)
+            .then(res => {
+              item.done = true
+            })
+            .catch(err => {
+              if (err && err.errMsg) _this.$Message.error(err.errMsg)
+              else _this.$Message.error('设置任务完成失败')
+            })
+        }
+      })
     }
   }
 }
@@ -124,7 +158,7 @@ export default {
   font-weight: 100;
 }
 .init-tip{
-  padding : 50px;
+  padding-top : 50px;
   text-align: center;
 }
 </style>
