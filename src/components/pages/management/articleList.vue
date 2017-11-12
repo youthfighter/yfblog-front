@@ -8,13 +8,13 @@
     </div>          
 </template>
 <script>
-
+import { getUsername } from '../../../utils/storage'
 export default {
   data () {
     return {
       columns: [
-        {title: '创作时间', key: 'createDate', sortable: true},
-        {title: '修改时间', key: 'lastUpdate', sortable: true},
+        {title: '创作时间', key: 'fmCreateDate', sortable: true},
+        {title: '修改时间', key: 'fmLastUpdate', sortable: true},
         {title: '文章标题', key: 'title'},
         {title: '文章作者', key: 'author'},
         {
@@ -92,14 +92,14 @@ export default {
     editArticle (id) {
       this.$router.push(`/management/article/edit/${id}`)
     },
-    getArticle (pageNum = 1, size = 20) {
+    getArticle (page = 0, size = 20) {
       let _this = this
-      let author = _this.user.name
+      let author = getUsername()
       if (!author) _this.$router.push('/management/login')
-      this.$http.get('/api/articles', {pageNum, size, author})
+      this.$http.get(`/api/articles?page=${page}&size=${size}&author=${author}`)
         .then(res => {
           if (res.data) {
-            _this.data = res.data.article
+            _this.data = res.data.articles
             _this.total = res.data.total
           }
         })

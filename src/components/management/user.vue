@@ -11,7 +11,7 @@
   </Dropdown>
 </template>
 <script>
-import { getUsername,  } from '../../utils/storage'
+import { getUsername, clearUsername } from '../../utils/storage'
 export default {
   data () {
     return {
@@ -36,6 +36,7 @@ export default {
       let _this = this
       _this.$http.delete('/api/session')
         .then(res => {
+          clearUsername()
           this.$router.push('/management/login')
         })
         .catch(err => {

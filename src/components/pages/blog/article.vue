@@ -18,8 +18,34 @@ import appArticleRecommend from '@/components/blog/articleRecommend'
 export default {
   data () {
     return {
-      hotArticle: [],
-      newArticle: []
+      hotArticle: [
+        {
+          _id: '5a06655a148a54063cf19127',
+          name: '热门文章测试'
+        },
+        {
+          _id: '5a06655a148a54063cf19127',
+          name: '热门文章测试'
+        },
+        {
+          _id: '5a06655a148a54063cf19127',
+          name: '热门文章测试'
+        }
+      ],
+      newArticle: [
+        {
+          _id: '5a06655a148a54063cf19127',
+          name: '最新文章测试'
+        },
+        {
+          _id: '5a06655a148a54063cf19127',
+          name: '最新文章测试'
+        },
+        {
+          _id: '5a06655a148a54063cf19127',
+          name: '最新文章测试'
+        }
+      ]
     }
   },
   components: {
@@ -27,8 +53,8 @@ export default {
     appArticleRecommend
   },
   created () {
-    this.getHotArticle()
-    this.getNewArticle()
+/*     this.getHotArticle()
+    this.getNewArticle() */
   },
   methods: {
     getHotArticle () {

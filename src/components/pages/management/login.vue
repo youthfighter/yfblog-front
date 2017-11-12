@@ -62,8 +62,8 @@ export default {
         password: md5(_this.form.password)
       })
         .then(res => {
-          if (res.data.user) {
-            setUsername(res.data.user.name)
+          if (res.data) {
+            setUsername(res.data.name)
             _this.$router.replace('/management/home')
           } else {
             _this.errmsg = '未知错误'
@@ -71,7 +71,7 @@ export default {
         })
         .catch(err => {
           if (err) {
-            _this.errmsg = err.response.data.errMsg
+            _this.errmsg = err.errMsg
           }
         })
     }

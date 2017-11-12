@@ -1,9 +1,9 @@
 export function getUsername () {
-  return sessionStorage.getItem('username')
+  return localStorage.getItem('username')
 }
 export function setUsername (username) {
-  sessionStorage.setItem('username', username)
+  localStorage.setItem('username', username)
 }
 export function clearUsername () {
-  sessionStorage.removeItem('username')
+  localStorage.removeItem('username')
 }

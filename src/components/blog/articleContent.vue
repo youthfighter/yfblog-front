@@ -7,7 +7,7 @@
         发布时间：{{article.publishDatetime}}
       </p>
       <div class="preview-tags-con">
-        <b class="preview-tip">
+        <b class="preview-tip" v-if="article.type && article.type.length > 0">
           <Icon type="ios-pricetags-outline"></Icon>
           &nbsp;标签：
           <Tag color="blue" v-if="index%4 == 0" v-for="(item,index) in article.type" :key="item._id">
@@ -24,7 +24,7 @@
           </Tag>
         </b>
       </div>
-      <div class="preview-content-con" v-html="article.content">
+      <div class="preview-content-con" v-html="article.html">
       </div>
     </Card>
   </div>

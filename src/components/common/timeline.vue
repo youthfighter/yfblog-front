@@ -3,8 +3,8 @@
     <li>
       <div class="time">
         <div class="date">
-          <div class="month-day">08-08</div>
-          <div class="year">2017</div>
+          <div class="month-day">{{article.monthDay}}</div>
+          <div class="year">{{article.year}}</div>
         </div>
         <div class="point"></div>
         <div class="clearfix"></div>
@@ -12,22 +12,17 @@
       <div class="describe">
         <div class="article">
           <h2>
-            三步实现滚动条触动css动画效果
+            {{title}}
           </h2>
           <div class="content">
-            <a class='artical-img' href="">
+            <router-link class='artical-img' :to="`/youthfighter/article/${article._id}`">
               <img src="../../assets/image/t03.jpg" width="200" height="170">
-            </a>    
-            <p>现在很多网站都有这种效果，我就整理了一下，现在很多网站都有这种效果，我就整理了一下，
-              现在很多网站都有这种效果，我就整理了一下，
-              分享出来。利用滚动条来实现动画效果，ScrollReveal.js
-               用于创建和管理元素进入可视区域时的动画效果，帮助你的网站增加吸
-               引力...
+            </router-link>  
+            <p>{{article.content}}
             </p>       
-            <a class='more' href="">
+            <router-link class='more' :to="`/youthfighter/article/${article._id}`">
               <Button type="success">查看更多>></Button>
-              <div class="clearfix"></div>
-            </a>   
+            </router-link>
           </div>
         </div>
       </div>
@@ -36,7 +31,9 @@
   </ul>
 </template>
 <script>
-export default {}
+export default {
+  props: ['article']
+}
 </script>
 <style scoped>
 ul li{

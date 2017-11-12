@@ -100,9 +100,9 @@ export default {
     getToDoList () {
       let _this = this
       _this.initLoading = 'init'
-      _this.$http.get('/api/tasks', {done: true})
+      _this.$http.get('/api/tasks')
         .then(res => {
-          if (res.data.toDoList) _this.toDoList = res.data.toDoList
+          if (res.data) _this.toDoList = res.data
           _this.initLoading = 'success'
         })
         .catch(err => {
