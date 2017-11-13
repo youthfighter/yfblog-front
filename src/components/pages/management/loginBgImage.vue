@@ -1,56 +1,53 @@
 <template>
 	<div class="login-bgimage">
 		<Row>
-			<Upload action="">
-					<Button type="info" icon="ios-cloud-upload-outline">添加新图片</Button>
+			<Upload action="/api/settings/loginBgImages" name="image" :format="['jpg','jpeg','png']" :on-success="uploadSuccess">
+					<Button type="info" icon="ios-cloud-upload-outline">添加新图片1</Button>
 			</Upload>
 		</Row>
-		<ul class="image-list">
-			<li v-for="(item,index) in bgImages" :key="index" :data-id="item._id">
-				<img :src="item.src">
-        <div v-if="currImageId == item._id">
+    <ul class="image-list" v-if="loginImage && loginImage.imageList">
+      <li v-for="(item,index) in loginImage.imageList" :key="index">
+        <img :src="item">
+        <div v-if="loginImage.currImage === item">
           <Icon type="checkmark-round" class="selected"></Icon>
         </div>	
-				<div v-else class="img-ctr" @click="setBgImageClick(item._id)" :data-id="item._id">
-					设为背景图
-				</div>
-			</li>
-      <Spin size="large" fix :style="showfix"></Spin>
-		</ul>	
+        <div v-else class="img-ctr" @click="setBgImageClick(index)">
+          设为背景图
+        </div>
+      </li>
+    </ul>
+    <div v-else>还没有设置背景图...</div>
 	</div>            
 </template>
 <script>
 export default {
   data () {
     return {
-      bgImages: [
-        {_id: 1, src: '/static/image/7047fc8f-f261-4401-9a5c-9ba42e70d50e.jpg'},
-        {_id: 2, src: '/static2/image/7047fc8f-f261-4401-9a5c-9ba42e70d50e.jpg'}
-      ],
-      currImageId: '1',
-      showfix: {
-        display: 'none'
+      loginImage: {
+        imageList: [],
+        currImage: null
       }
     }
   },
   created () {
-    this.getBgImage()
+    this.getAllBgImages()
   },
   methods: {
-    setBgImageClick (_id) {
+    setBgImageClick (index) {
+      let _this = this
       this.$Modal.confirm({
         title: '确认操作',
         content: '<p>确认设置该图片登录页图片？此操作立即生效。</p>',
         onOk: () => {
-          this.setBgImage(_id)
+          _this.setBgImage(index)
         }
       })
     },
-    setBgImage (_id) {
+    setBgImage (index) {
       let _this = this
-      this.$http.post('/api/login/bgImage', {_id})
+      this.$http.put(`api/settings/loginBgImages/${index}`)
         .then(res => {
-          _this.currImageSrc = res.data._id
+          _this.loginImage.currImage = _this.loginImage.imageList[index]
         })
         .catch(err => {
           if (err) {
@@ -58,17 +55,23 @@ export default {
           }
         })
     },
-    getBgImage () {
-      this.$http.get('/api/login/bgImage')
+    getAllBgImages () {
+      let _this = this
+      this.$http.get('/api/settings/loginBgImages')
         .then(res => {
-          this.bgImages = res.data.bgImages
-          this.currImageId = res.data.currImageId
+          res.data.imageList.forEach(value => {
+            _this.loginImage.imageList.push(value)
+          })
+          _this.loginImage.currImage = res.data.currImage
         })
         .catch(err => {
-          if (err) {
-            this.$Message.error('获取背景图片失败，请刷新页面重试')
+          if (err && err.errCode !== 'image.not.set') {
+            _this.$Message.error('获取背景图片失败，请刷新页面重试')
           }
         })
+    },
+    uploadSuccess (res, file) {
+      this.loginImage.imageList.push(res.data)
     }
   }
 }
