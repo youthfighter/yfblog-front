@@ -17,8 +17,8 @@ export default {
     return {
       'name': 'YOUTH·FIGHTER',
       'navs': [
-        {'name': '首页', 'link': '/'},
-        {'name': '关于我', 'link': '/'},
+        {'name': '首页', 'link': '/youthfighter'},
+        {'name': '全部文章', 'link': '/youthfighter/articleList'},
         {'name': '关于她', 'link': '/'},
         {'name': '学无止境', 'link': '/'},
         {'name': '留言', 'link': '/'}

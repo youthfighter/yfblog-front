@@ -40,7 +40,6 @@ const router = new Router({
 /* 路由控制 */
 router.beforeEach((to, from, next) => {
   /* 没有匹配到路由页面 */
-  console.log(to.matched.length)
   if (to.matched.length === 0) {
     next('/youthfighter/404')
   } else {

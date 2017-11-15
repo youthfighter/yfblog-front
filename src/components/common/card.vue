@@ -1,9 +1,11 @@
 <template>
   <Card style="width:360px" :shadow='true'>
-    <div style="text-align:center;background: #ececec">
-        <img src="../../assets/image/t02.jpg">
-        <div class="title">{{ title }}{{index}}</div>
-        <div class="content">{{ content }}</div>
+    <div style="text-align:center;background: #ececec;height:" :a="index">
+        <img src="../../assets/image/3.jpg" v-if="index===0">
+        <img src="../../assets/image/2.jpg" v-if="index===1">
+        <img src="../../assets/image/1.jpg" v-if="index===2">
+        <div class="title">{{ title }}</div>
+        <div class="content" v-html="content"></div>
     </div>
   </Card>
 </template>
@@ -35,6 +37,8 @@ img{
 }
 .content{
   padding: 10px;
+  height: 100px;
+  overflow: hidden;
   line-height: 22px;
   color: #666;
   word-break: break-all;

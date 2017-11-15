@@ -1,5 +1,6 @@
 import index from '@/components/pages/blog/index'
 import article from '@/components/pages/blog/article'
+import articleList from '@/components/pages/blog/articleList'
 import notFound from '@/components/pages/blog/404'
 import error from '@/components/pages/blog/500'
 export default [
@@ -22,5 +23,10 @@ export default [
     path: '/youthfighter/500',
     name: '500',
     component: error
+  },
+  {
+    path: '/youthfighter/articleList',
+    name: 'articleList',
+    component: articleList
   }
 ]

@@ -3,8 +3,8 @@
     <li>
       <div class="time">
         <div class="date">
-          <div class="month-day">{{article.monthDay}}</div>
-          <div class="year">{{article.year}}</div>
+          <div class="month-day">{{article.createDate | formateDate('MM-DD') }}</div>
+          <div class="year">{{article.createDate | formateDate('YYYY') }}</div>
         </div>
         <div class="point"></div>
         <div class="clearfix"></div>
@@ -12,12 +12,12 @@
       <div class="describe">
         <div class="article">
           <h2>
-            {{title}}
+            {{article.title}}
           </h2>
           <div class="content">
             <router-link class='artical-img' :to="`/youthfighter/article/${article._id}`">
               <img src="../../assets/image/t03.jpg" width="200" height="170">
-            </router-link>  
+            </router-link>
             <p>{{article.content}}
             </p>       
             <router-link class='more' :to="`/youthfighter/article/${article._id}`">

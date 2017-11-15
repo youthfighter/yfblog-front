@@ -21,6 +21,7 @@ Mock.mock(/\/api\/articles\/[0-9]{1,40}/, 'get', {
   'title': '@csentence',
   'author': '@cname',
   'content': '@cparagraph',
+  'tags': [{name: '@cname', value: '前端'}],
   'hidden|1-2': true
 })
 Mock.mock('/api/article/one', 'delete', {
@@ -64,13 +65,16 @@ Mock.mock('/api/tasks', 'get', {
 })
 Mock.mock(/\/api\/tasks\/[0-9]{1,40}/, 'patch')
 /* articles */
-Mock.mock('/api/articles', 'get', {
-  'article|20': [{
+Mock.mock(/\/api\/articles\??[\w&=]{0,1000}/, 'get', {
+  'articles|5': [{
     '_id': '@id',
     'createDate': '@datetime',
     'lastUpdate': '@datetime',
     'title': '@csentence',
+    'content': '@cparagraph',
     'author': '@cname',
+    'tags|1-4': [{'name': '@cname', value: 'CSS'}],
+    'html': '@cparagraph',
     'hidden|1-2': true
   }],
   'total|50-100': 100
@@ -79,6 +83,9 @@ Mock.mock(/\/api\/articles\/[0-9]{1,40}/, 'get', {
   '_id': '@id',
   'title': '@ctitle',
   'content': '@cparagraph',
+  'html': '@cparagraph',
+  'createDate': '@datetime',
+  'tags': [{name: '@cname', value: 'qianduan'}],
   'type|1-4': [{
     '_id': '@id',
     'tag': '@cname'

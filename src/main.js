@@ -4,14 +4,18 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import iView from 'iview'
-/* import './mocks/index' */
+import './mocks/index'
 import 'iview/dist/styles/iview.css'
 import './assets/styles/base.css'
 import axios from 'axios'
 import { delCookie } from '../src/utils/cookie'
+import allFilters from '../src/filters/index'
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
-Vue.prototype.user = {}
+/* 定义全局的filter */
+Object.keys(allFilters).forEach(key => {
+  Vue.filter(key, allFilters[key])
+})
 
 Vue.use(iView)
 /* 定义request拦截器 */
