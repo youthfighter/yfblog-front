@@ -73,11 +73,38 @@ Mock.mock(/\/api\/articles\??[\w&=]{0,1000}/, 'get', {
     'title': '@csentence',
     'content': '@cparagraph',
     'author': '@cname',
-    'tags|1-4': [{'name': '@cname', value: 'CSS'}],
+    'tags|1-4': ['@cname'],
     'html': '@cparagraph',
     'hidden|1-2': true
   }],
   'total|50-100': 100
+})
+Mock.mock('/api/hotarticles', 'get', {
+  'articles|3-4': [{
+    '_id': '@id',
+    'createDate': '@datetime',
+    'lastUpdate': '@datetime',
+    'title': '@csentence',
+    'content': '@cparagraph',
+    'author': '@cname',
+    'tags|1-4': ['@cname'],
+    'html': '@cparagraph',
+    'hidden|1-2': true
+  }],
+  'total|50-100': 100
+})
+Mock.mock('/api/newarticles', 'get', {
+  'articles|3-4': [{
+    '_id': '@id',
+    'createDate': '@datetime',
+    'lastUpdate': '@datetime',
+    'title': '@csentence',
+    'content': '@cparagraph',
+    'author': '@cname',
+    'tags|1-4': ['@cname'],
+    'html': '@cparagraph',
+    'hidden|1-2': true
+  }]
 })
 Mock.mock(/\/api\/articles\/[0-9]{1,40}/, 'get', {
   '_id': '@id',
@@ -85,7 +112,7 @@ Mock.mock(/\/api\/articles\/[0-9]{1,40}/, 'get', {
   'content': '@cparagraph',
   'html': '@cparagraph',
   'createDate': '@datetime',
-  'tags': [{name: '@cname', value: 'qianduan'}],
+  'tags|1-4': ['@cname'],
   'type|1-4': [{
     '_id': '@id',
     'tag': '@cname'

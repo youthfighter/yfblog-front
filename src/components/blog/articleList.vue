@@ -18,17 +18,17 @@
             <b class="preview-tip" v-if="article.tags && article.tags.length > 0">
               <Icon type="ios-pricetags-outline"></Icon>
               &nbsp;标签：
-              <Tag color="blue" v-if="index%4 == 0" v-for="(item,index) in article.tags" :key="item._id">
-                <router-link color="blue" :to="`/youthfighter/articleList?tag=${item.name}`">{{item.name}}</router-link>
+              <Tag color="blue" v-if="index%4 == 0" v-for="(item,index) in article.tags" :key="index">
+                <router-link color="blue" :to="`/youthfighter/articleList?tag=${item}`">{{item}}</router-link>
               </Tag>
               <Tag color="green" v-if="index%4 == 1" v-for="(item,index) in article.tags" :key="item._id">
-                <router-link color="blue" :to="`/youthfighter/articleList?tag=${item.name}`">{{item.name}}</router-link>
+                <router-link color="blue" :to="`/youthfighter/articleList?tag=${item}`">{{item}}</router-link>
               </Tag>
               <Tag color="red" v-if="index%4 == 2" v-for="(item,index) in article.tags" :key="item._id">
-                <router-link color="blue" :to="`/youthfighter/articleList?tag=${item.name}`">{{item.name}}</router-link>
+                <router-link color="blue" :to="`/youthfighter/articleList?tag=${item}`">{{item}}</router-link>
               </Tag>
               <Tag color="yellow" v-if="index%4 == 3" v-for="(item,index) in article.tags" :key="item._id">
-                <router-link color="blue" :to="`/youthfighter/articleList?tag=${item.name}`">{{item.name}}</router-link>
+                <router-link color="blue" :to="`/youthfighter/articleList?tag=${item}`">{{item}}</router-link>
               </Tag>
             </b>
           </div>
