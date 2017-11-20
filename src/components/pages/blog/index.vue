@@ -42,7 +42,7 @@ export default {
     this.getArticle()
   },
   methods: {
-    getArticle (page = 0, size = 20) {
+    getArticle (page = 1, size = 20) {
       let _this = this
       this.$http.get(`/api/articles?page=${page}&size=${size}`)
         .then(res => {

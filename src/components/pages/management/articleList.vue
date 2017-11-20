@@ -9,7 +9,7 @@
       </a>
       <Table :columns="columns" :data="data"></Table>
       <Page :total="total" class="page-bar" show-total show-elevator @on-change="toPage"></Page>
-    </Card>          
+    </Card>
 </template>
 <script>
 import { getUsername } from '../../../utils/storage'

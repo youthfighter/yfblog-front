@@ -32,7 +32,8 @@
               </Tag>
             </b>
           </div>
-          <div class="preview-content-con" v-html="article.html">
+          <div class="preview-content-con">
+            {{article.description}}
           </div>      
         </li>
       </ul>
@@ -57,12 +58,14 @@ export default {
   methods: {
     getArticlesByParams () {
       let _this = this
-      _this.params = _this.$route.query
+      let query = _this.$route.query
+      _this.params.page = query.page ? query.page : ''
+      _this.params.tag = query.tag ? query.tag : ''
       _this.$http.get(`/api/articles?page=${_this.params.page}&size=20&tag=${_this.params.tag}`)
         .then(res => {
           if (res.data && res.data.articles) {
             _this.total = res.data.total
-            _this.articles.splice(1, _this.articles.length)
+            _this.articles.splice(0, _this.articles.length)
             res.data.articles.forEach(value => {
               _this.articles.push(value)
             })
