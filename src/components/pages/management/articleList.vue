@@ -97,7 +97,7 @@ export default {
     editArticle (id) {
       this.$router.push(`/management/article/edit/${id}`)
     },
-    getArticle (page = 0, size = 20) {
+    getArticle (page = 1, size = 20) {
       let _this = this
       let author = getUsername()
       if (!author) _this.$router.push('/management/login')
