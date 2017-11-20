@@ -121,7 +121,6 @@ export default {
   left: 260px;
   right: 10px;
   bottom: 10px;
-  background-color: #fff;
   overflow: auto;
   padding: 10px;
   z-index: 1;

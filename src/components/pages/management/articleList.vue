@@ -1,14 +1,19 @@
 <template>
-    <div class="article-list">
-      <div class="btn-grp">
-        <Button type="primary" @click="addArticle">新增</Button>
-      </div>
+    <Card class="article-list">
+      <p slot="title">
+        <Icon type="ios-list-outline"></Icon>
+        文章列表
+      </p>
+      <a href="#" slot="extra" @click.prevent="changeLimit">
+        <Button type="primary" @click="addArticle" icon="plus-round" size="small">新增</Button>
+      </a>
       <Table :columns="columns" :data="data"></Table>
       <Page :total="total" class="page-bar" show-total show-elevator @on-change="toPage"></Page>
-    </div>          
+    </Card>          
 </template>
 <script>
 import { getUsername } from '../../../utils/storage'
+import filters from '../../../filters/index'
 export default {
   data () {
     return {
@@ -99,7 +104,12 @@ export default {
       this.$http.get(`/api/articles?page=${page}&size=${size}&author=${author}`)
         .then(res => {
           if (res.data) {
-            _this.data = res.data.articles
+            _this.data.splice(0, _this.data.length)
+            res.data.articles.forEach(value => {
+              value.fmCreateDate = filters.formateDate(value.createDate, 'YYYY-MM-DD')
+              value.fmLastUpdate = filters.formateDate(value.lastUpdate, 'YYYY-MM-DD')
+              _this.data.push(value)
+            })
             _this.total = res.data.total
           }
         })
@@ -120,9 +130,6 @@ export default {
 }
 </script>
 <style scoped>
-.btn-grp{
-  margin-bottom: 20px;
-}
 .page-bar{
   margin-top: 20px;
   text-align: right

@@ -24,7 +24,7 @@
           </Tag>
         </b>
       </div>
-      <div class="preview-content-con" v-html="article.html">
+      <div class="preview-content-con" v-html="article.html" v-highlight>
       </div>
     </Card>
   </div>

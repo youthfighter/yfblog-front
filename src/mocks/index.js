@@ -110,7 +110,7 @@ Mock.mock(/\/api\/articles\/[0-9]{1,40}/, 'get', {
   '_id': '@id',
   'title': '@ctitle',
   'content': '@cparagraph',
-  'html': '@cparagraph',
+  'html': '<pre><code>let a = 1;a = 10;//ssssshellozzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</code></pre>',
   'createDate': '@datetime',
   'tags|1-4': ['@cname'],
   'type|1-4': [{
@@ -123,9 +123,7 @@ Mock.mock('/api/articles', 'post')
 Mock.mock(/\/api\/articles\/[0-9]{1,40}/, 'put')
 /* session */
 Mock.mock('/api/session', 'post', {
-  'user': {
-    name: 'admin2'
-  }
+  'name': 'admin2'
 })
 Mock.mock('/api/session', 'delete')
 export default Mock

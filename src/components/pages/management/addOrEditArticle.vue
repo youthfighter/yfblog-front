@@ -1,26 +1,41 @@
 <template>
     <div class="add-article">
-        <Form :model="formItem" :rules="formRule" :label-width="70">
-            <FormItem label="标题:" prop="title">
-                <Input v-model="formItem.title" placeholder="请输入文章的标题" style="width:600px"></Input>
-            </FormItem>
-            <FormItem label="内容:" prop="content">
-                <Input v-model="formItem.content" type="textarea" :autosize="{minRows: 12,maxRows: 12}" style="width:600px" 
-                placeholder="请输入博客内容(markdown格式)"></Input>
-            </FormItem>
-            <FormItem label="公开:" prop="hidden">
+      <Row :gutter="16">
+        <Col span='18'>
+          <Card>
+            <Form :model="formItem" :rules="formRule" :label-width="55">
+              <FormItem label="标题:" prop="title">
+                  <Input v-model="formItem.title" placeholder="请输入文章的标题"></Input>
+              </FormItem>
+              <FormItem label="内容:" prop="content">
+                  <Input v-model="formItem.content" type="textarea" :autosize="{minRows: 24,maxRows: 24}" 
+                  placeholder="请输入博客内容(markdown格式)"></Input>
+              </FormItem>
+            </Form>
+          </Card> 
+        </Col>
+        <Col span='6'>
+          <Card>
+            <p slot="title">
+              <Icon type="paper-airplane"></Icon>
+              发布
+            </p>
+            <div>
+              <div class="settings-item">
+                <Icon type="eye"></Icon> 公开度:&nbsp;&nbsp;&nbsp;
                 <i-switch v-model="formItem.hidden">
-                    <span slot="open">是</span>
-                    <span slot="close">否</span>
+                  <span slot="open">是</span>
+                  <span slot="close">否</span>
                 </i-switch>
-            </FormItem>
-            <FormItem>
-                <Button type="primary" @click="save" :loading='saveBtnStatus'>{{saveBtnText}}</Button>
-                <Button type="ghost" style="margin-left: 8px" @click="cancel">取消</Button>
-            </FormItem>
-
-
-        </Form>         
+              </div>
+              <div class="settings-item settings-footer">
+                  <Button type="primary" @click="save" :loading='saveBtnStatus'>{{saveBtnText}}</Button>
+                  <Button type="ghost" style="margin-left: 8px" @click="cancel">取消</Button>
+              </div>
+            </div>
+          </Card>
+        </Col>
+      </Row>       
     </div>
 </template>
 
@@ -137,5 +152,12 @@ export default {
 .add-article{
     margin-bottom: 50px;
     position: relative;
+}
+.settings-item{
+  margin-top: 20px;
+}
+.settings-footer{
+  border-top: 1px solid rgb(243, 239, 241);
+  padding-top: 20px
 }
 </style>

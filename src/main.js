@@ -7,16 +7,21 @@ import iView from 'iview'
 import './mocks/index'
 import 'iview/dist/styles/iview.css'
 import './assets/styles/base.css'
+import 'highlight.js/styles/default.css'
 import axios from 'axios'
 import { delCookie } from '../src/utils/cookie'
 import allFilters from '../src/filters/index'
+import allDirectives from '../src/directives/index'
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 /* 定义全局的filter */
 Object.keys(allFilters).forEach(key => {
   Vue.filter(key, allFilters[key])
 })
-
+/* 定义全局的directive */
+Object.keys(allDirectives).forEach(key => {
+  Vue.directive(key, allDirectives[key])
+})
 Vue.use(iView)
 /* 定义request拦截器 */
 axios.interceptors.request.use(

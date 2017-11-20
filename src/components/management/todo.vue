@@ -9,7 +9,7 @@
         <Icon type="plus-round"></Icon>
       </a>
       <ul class="todolist" v-if="initLoading === 'success' && toDoList.length > 0">
-        <li v-for="item in toDoList" :key="item._id" @click="setTaskDone(item)">
+        <li v-for="item in toDoList" :key="item._id" @click.prevent="setTaskDone(item)">
           <Row>
             <Col span="2" style="">
               <Checkbox v-model="item.done" :id="item._id"></Checkbox></Col>
@@ -73,7 +73,6 @@ export default {
     showDialog () {
       this.addToDoDialog = true
     },
-
     save () {
       if (this.newToDoThings === '') {
         this.addToDoDialog = false
@@ -102,7 +101,12 @@ export default {
       _this.initLoading = 'init'
       _this.$http.get('/api/tasks')
         .then(res => {
-          if (res.data) _this.toDoList = res.data
+          if (res.data && res.data.toDoList) {
+            _this.toDoList.splice(0, _this.toDoList.length)
+            res.data.toDoList.forEach(value => {
+              _this.toDoList.push(value)
+            })
+          }
           _this.initLoading = 'success'
         })
         .catch(err => {

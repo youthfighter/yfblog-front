@@ -99,6 +99,7 @@ li{
     margin-top: 5px;
 }
 .preview-tip {
+    margin-left: 20px;
     font-size: 12px;
     color: #c3c3c3;
 }
