@@ -5,9 +5,17 @@
         <Icon type="android-checkbox-outline"></Icon>
         代办事项<span>{{"("+toDoCount+")"}}</span>
       </p>
+      
       <a href="#" slot="extra" @click.prevent="showDialog">
-        <Icon type="plus-round"></Icon>
+        <Tooltip content="添加新的任务" placement="right">
+          <Icon type="plus-round"></Icon>
+        </Tooltip>
       </a>
+      <router-link slot="extra" :to="'/management/tasks'" style="margin-left:10px">
+        <Tooltip content="查看任务列表" placement="right">
+          <Icon type="ios-list-outline"></Icon>
+        </Tooltip>
+      </router-link>
       <ul class="todolist" v-if="initLoading === 'success' && toDoList.length > 0">
         <li v-for="item in toDoList" :key="item._id" @click.prevent="setTaskDone(item)">
           <Row>

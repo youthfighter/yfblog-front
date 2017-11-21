@@ -5,6 +5,7 @@ import addOrEditArticle from '@/components/pages/management/addOrEditArticle'
 import setCard from '@/components/pages/management/setCard'
 import setLogin from '@/components/pages/management/setLogin'
 import bgimage from '@/components/pages/management/loginBgImage'
+import taskList from '@/components/pages/management/taskList'
 const context = '/management'
 export default [
   {
@@ -46,5 +47,10 @@ export default [
     path: `${context}/settings/login/bgimage`,
     name: 'bgimage',
     component: bgimage
+  },
+  {
+    path: `${context}/tasks`,
+    name: 'taskList',
+    component: taskList
   }
 ]

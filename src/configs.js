@@ -59,6 +59,11 @@ const menuTree = [
         ]
       }
     ]
+  },
+  {
+    label: '全部任务',
+    href: `${context}/tasks`,
+    hide: true
   }
 ]
 export {

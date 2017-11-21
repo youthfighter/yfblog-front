@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import iView from 'iview'
-/* import './mocks/index' */
+import './mocks/index'
 import 'iview/dist/styles/iview.css'
 import './assets/styles/base.css'
 import 'highlight.js/styles/default.css'

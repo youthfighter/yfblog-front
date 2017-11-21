@@ -51,7 +51,7 @@ Mock.mock('/api/tasks', 'post', {
   '_id': '@id',
   'createDate': '@datetime',
   'author': 'youthfighter',
-  'task': '@cparagraph',
+  'task': '@csentence',
   'done': false
 })
 Mock.mock('/api/tasks', 'get', {
@@ -59,7 +59,7 @@ Mock.mock('/api/tasks', 'get', {
     '_id': '@id',
     'createDate': '@datetime',
     'author': 'youthfighter',
-    'task': '@cparagraph',
+    'task': '@csentence',
     'done': false
   }]
 })
