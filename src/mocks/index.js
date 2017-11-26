@@ -126,4 +126,41 @@ Mock.mock('/api/session', 'post', {
   'name': 'admin2'
 })
 Mock.mock('/api/session', 'delete')
+/* tags */
+Mock.mock('/api/tags', 'get', {
+  'tags|3-6': [{
+    '_id': '@id',
+    'createDate': '@datetime',
+    'author': 'youthfighter',
+    'name': '@cname'
+  }],
+  total: 21
+})
+Mock.mock(/\/api\/tags\/[0-9]{1,40}/, 'delete', {
+  'tags|3-6': [{
+    '_id': '@id',
+    'createDate': '@datetime',
+    'author': 'youthfighter',
+    'name': '@cname'
+  }],
+  total: 21
+})
+Mock.mock(/\/api\/tags\/[0-9]{1,40}/, 'put', {
+  'tags|3-6': [{
+    '_id': '@id',
+    'createDate': '@datetime',
+    'author': 'youthfighter',
+    'name': '@cname'
+  }],
+  total: 21
+})
+Mock.mock('/api/tags', 'post', {
+  '_id': '@id',
+  'createDate': '@datetime',
+  'author': 'youthfighter',
+  'name': '@cname'
+})
+Mock.mock(/\/api\/tags\/[0-9]{1,40}/, 'put', {
+  'ok': '1'
+})
 export default Mock

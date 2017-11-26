@@ -57,6 +57,10 @@ const menuTree = [
             href: `${context}/settings/login/bgimage`
           }
         ]
+      },
+      {
+        label: '标签管理',
+        href: `${context}/settings/tags`
       }
     ]
   },

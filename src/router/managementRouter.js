@@ -6,6 +6,8 @@ import setCard from '@/components/pages/management/setCard'
 import setLogin from '@/components/pages/management/setLogin'
 import bgimage from '@/components/pages/management/loginBgImage'
 import taskList from '@/components/pages/management/taskList'
+import tagList from '@/components/pages/management/tagList'
+
 const context = '/management'
 export default [
   {
@@ -52,5 +54,10 @@ export default [
     path: `${context}/tasks`,
     name: 'taskList',
     component: taskList
+  },
+  {
+    path: `${context}/settings/tags`,
+    name: 'tagList',
+    component: tagList
   }
 ]

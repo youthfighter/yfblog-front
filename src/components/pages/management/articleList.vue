@@ -8,7 +8,7 @@
         <Button type="primary" @click="addArticle" icon="plus-round" size="small">新增</Button>
       </a>
       <Table :columns="columns" :data="data"></Table>
-      <Page :total="total" class="page-bar" show-total show-elevator @on-change="toPage"></Page>
+      <Page :total="total" :page-size="20" class="page-bar" show-total show-elevator @on-change="toPage"></Page>
     </Card>
 </template>
 <script>
