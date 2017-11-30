@@ -5,15 +5,15 @@
   </Card>
 </template>
 <<script>
+import filters from '../../../filters/index'
 export default {
   data () {
     return {
       columnsName: [
         {title: '序号', type: 'index', width: '70', align: 'center'},
         {title: '任务描述', key: 'task'},
-        {title: '建立时间', key: 'createDate', align: 'center', width: '180'},
+        {title: '建立时间', key: 'fmCreateDate', align: 'center', width: '180'},
         {title: '完成时间', key: 'doneDate', align: 'center', width: '180'},
-        {title: '持续时间', key: 'duration', align: 'center'},
         {
           title: '操作',
           align: 'center',
@@ -51,7 +51,8 @@ export default {
           }
         }
       ],
-      data: []
+      data: [],
+      total: 0
     }
   },
   created () {
@@ -63,22 +64,19 @@ export default {
       _this.$http.get('/api/tasks')
         .then(res => {
           if (res.data && res.data.toDoList) {
+            _this.total = res.data.total
             _this.data = res.data.toDoList.map(value => {
-              if (value.doneDate) {
-                value.duration = new Date(value.doneDate).getTime() - new Date(value.createDate).getTime()
-              } else {
-                value.duration = '--'
+              value.fmCreateDate = filters.formateDate(value.createDate, 'YYYY-MM-DD hh:mm:ss')
+              if (!value.doneDate) {
                 value.doneDate = '--'
               }
               return value
             })
-          } else {
-            throw new Error(500, '获取任务数据失败')
           }
         })
         .catch(err => {
           if (err) {
-            _this.$message.error(err.message ? err.message : '未知故障')
+            _this.$message.error(err.msg ? err.msg : '未知故障')
           }
         })
     },
@@ -105,15 +103,6 @@ export default {
             })
         }
       })
-    }
-  },
-  computed: {
-    total () {
-      if (Array.isArray(this.data)) {
-        return this.data.length
-      } else {
-        return 0
-      }
     }
   }
 }

@@ -20,13 +20,14 @@
   </Card>
 </template>
 <<script>
+import filters from '../../../filters/index'
 export default {
   data () {
     return {
       columnsName: [
         {title: '序号', type: 'index', width: '70', align: 'center'},
         {title: '标签名称', key: 'name'},
-        {title: '建立时间', key: 'createDate', align: 'center', width: '180'},
+        {title: '建立时间', key: 'fmCreateDate', align: 'center', width: '180'},
         {
           title: '操作',
           align: 'center',
@@ -54,7 +55,10 @@ export default {
       total: 0,
       tagDialog: false,
       saveLoading: false,
-      tagText: ''
+      tagText: '',
+      ruleValidate: [
+
+      ]
     }
   },
   created () {
@@ -66,7 +70,11 @@ export default {
       _this.$http.get('/api/tags')
         .then(res => {
           if (res.data && res.data.tags) {
-            _this.data = res.data.tags
+            _this.data.splice(0, _this.data.length)
+            res.data.tags.forEach(value => {
+              value.fmCreateDate = filters.formateDate(value.createDate, 'YYYY-MM-DD hh:mm:ss')
+              _this.data.push(value)
+            })
             _this.total = res.data.total
           }
         })
@@ -86,17 +94,26 @@ export default {
     saveTag () {
       let _this = this
       _this.saveLoading = true
-      _this.$http.post('/api/tags', {name: _this.tagText})
+      let name = _this.tagText
+      if (!name) {
+        _this.$Message.error('请输入标签内容')
+        _this.saveLoading = false
+        return
+      }
+      _this.$http.post('/api/tags', {name})
         .then(res => {
           _this.saveLoading = false
           if (res.data) {
-            _this.data.push(res.data)
+            let value = res.data
+            value.fmCreateDate = filters.formateDate(value.createDate, 'YYYY-MM-DD hh:mm:ss')
+            _this.data.push(value)
           }
         })
         .catch(err => {
           _this.saveLoading = false
           if (err) {
-            _this.$Message.error('标签保存失败')
+            let msg = err.errMsg ? err.errMsg : '标签保存失败'
+            _this.$Message.error(msg)
           }
         })
     },

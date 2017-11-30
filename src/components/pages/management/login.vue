@@ -22,6 +22,14 @@
                 </span>
               </Input>
             </FormItem>
+            <FormItem prop="password">
+              <Input type="password" v-model="form.code" placeholder="请输入验证码" size="large">
+                <span slot="prepend">
+                  <Icon :size="14" type="image"></Icon>
+                </span>
+                <div class="captcha" style="padding:0" slot="append">12346</div>
+              </Input>
+            </FormItem>
             <FormItem>
               <Button @click="handleSubmit" type="primary" long v-if='loginFlag'>登录</Button>
               <Button @click="handleSubmit" type="primary" long v-else disabled>登录</Button>
@@ -41,7 +49,8 @@ export default {
     return {
       form: {
         userName: '',
-        password: ''
+        password: '',
+        code: ''
       },
       rules: {
         userName: [
@@ -49,6 +58,9 @@ export default {
         ],
         password: [
           { required: true, message: '密码不能为空', trigger: 'blur' }
+        ],
+        code: [
+          { required: true, message: '验证码不能为空', trigger: 'blur' }
         ]
       },
       errmsg: ''
@@ -117,5 +129,12 @@ html,body{
   height: 22px;
   line-height: 22px;
   color: red;
+}
+.ivu-input-group-append{
+  padding: 0!important;
+}
+.ivu-input-group-append .captcha{
+  width: 100px;
+  height: 30px;
 }
 </style>
