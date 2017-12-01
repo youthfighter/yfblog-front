@@ -27,7 +27,7 @@
                 <span slot="prepend">
                   <Icon :size="14" type="image"></Icon>
                 </span>
-                <div class="captcha" style="padding:0" slot="append">12346</div>
+                <a class="captcha" style="padding:0" slot="append" v-html="captcha" @click="getCaptcha"></a>
               </Input>
             </FormItem>
             <FormItem>
@@ -63,15 +63,20 @@ export default {
           { required: true, message: '验证码不能为空', trigger: 'blur' }
         ]
       },
-      errmsg: ''
+      errmsg: '',
+      captcha: '<h1>123</h1>'
     }
+  },
+  created () {
+    this.getCaptcha()
   },
   methods: {
     handleSubmit () {
       let _this = this
       this.$http.post('/api/session', {
         name: _this.form.userName,
-        password: md5(_this.form.password)
+        password: md5(_this.form.password),
+        code: _this.form.code
       })
         .then(res => {
           if (res.data) {
@@ -84,13 +89,26 @@ export default {
         .catch(err => {
           if (err) {
             _this.errmsg = err.errMsg
+            if (err.errCode === 'user.captcha.error') _this.getCaptcha()
+          }
+        })
+    },
+    getCaptcha () {
+      let _this = this
+      _this.$http.get('/api/captcha')
+        .then(res => {
+          _this.captcha = res.data.captcha
+        })
+        .catch(err => {
+          if (err) {
+            _this.errmsg = '获取验证码失败'
           }
         })
     }
   },
   computed: {
     loginFlag () {
-      if (this.form.password && this.form.userName) {
+      if (this.form.password && this.form.userName && this.form.code) {
         return true
       } else {
         return false
