@@ -94,6 +94,7 @@ export default {
     saveTag () {
       let _this = this
       _this.saveLoading = true
+      _this.tagDialog = false
       let name = _this.tagText
       if (!name) {
         _this.$Message.error('请输入标签内容')

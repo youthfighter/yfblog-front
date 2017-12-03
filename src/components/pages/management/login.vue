@@ -22,8 +22,8 @@
                 </span>
               </Input>
             </FormItem>
-            <FormItem prop="password">
-              <Input type="password" v-model="form.code" placeholder="请输入验证码" size="large">
+            <FormItem prop="captcha">
+              <Input type="text" v-model="form.captcha" placeholder="请输入验证码" size="large">
                 <span slot="prepend">
                   <Icon :size="14" type="image"></Icon>
                 </span>
@@ -50,7 +50,7 @@ export default {
       form: {
         userName: '',
         password: '',
-        code: ''
+        captcha: ''
       },
       rules: {
         userName: [
@@ -59,12 +59,12 @@ export default {
         password: [
           { required: true, message: '密码不能为空', trigger: 'blur' }
         ],
-        code: [
+        captcha: [
           { required: true, message: '验证码不能为空', trigger: 'blur' }
         ]
       },
       errmsg: '',
-      captcha: '<h1>123</h1>'
+      captcha: ''
     }
   },
   created () {
@@ -76,7 +76,7 @@ export default {
       this.$http.post('/api/session', {
         name: _this.form.userName,
         password: md5(_this.form.password),
-        code: _this.form.code
+        captcha: _this.form.captcha
       })
         .then(res => {
           if (res.data) {
@@ -89,7 +89,7 @@ export default {
         .catch(err => {
           if (err) {
             _this.errmsg = err.errMsg
-            if (err.errCode === 'user.captcha.error') _this.getCaptcha()
+            _this.getCaptcha()
           }
         })
     },
@@ -108,7 +108,7 @@ export default {
   },
   computed: {
     loginFlag () {
-      if (this.form.password && this.form.userName && this.form.code) {
+      if (this.form.password && this.form.userName && this.form.captcha) {
         return true
       } else {
         return false
@@ -154,5 +154,6 @@ html,body{
 .ivu-input-group-append .captcha{
   width: 100px;
   height: 30px;
+  display: block
 }
 </style>

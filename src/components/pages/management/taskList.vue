@@ -4,7 +4,7 @@
     <Page :total="total" :page-size="20" class="page-bar" show-total show-elevator @on-change="toPage"></Page>
   </Card>
 </template>
-<<script>
+<script>
 import filters from '../../../filters/index'
 export default {
   data () {
@@ -13,7 +13,7 @@ export default {
         {title: '序号', type: 'index', width: '70', align: 'center'},
         {title: '任务描述', key: 'task'},
         {title: '建立时间', key: 'fmCreateDate', align: 'center', width: '180'},
-        {title: '完成时间', key: 'doneDate', align: 'center', width: '180'},
+        {title: '完成时间', key: 'fmDoneDate', align: 'center', width: '180'},
         {
           title: '操作',
           align: 'center',
@@ -68,7 +68,9 @@ export default {
             _this.data = res.data.toDoList.map(value => {
               value.fmCreateDate = filters.formateDate(value.createDate, 'YYYY-MM-DD hh:mm:ss')
               if (!value.doneDate) {
-                value.doneDate = '--'
+                value.fmDoneDate = '--'
+              } else {
+                value.fmDoneDate = filters.formateDate(value.doneDate, 'YYYY-MM-DD hh:mm:ss')
               }
               return value
             })
@@ -100,6 +102,25 @@ export default {
             .catch(err => {
               if (err && err.errMsg) _this.$Message.error(err.errMsg)
               else _this.$Message.error('设置任务完成失败')
+            })
+        }
+      })
+    },
+    removeTask (row) {
+      let _this = this
+      _this.$Modal.confirm({
+        title: '警告',
+        content: `确定删除任务【${row.task}】?`,
+        onOk () {
+          _this.$http.delete(`/api/tasks/${row._id}`)
+            .then(res => {
+              _this.$Message.success('删除成功')
+              _this.getTaskList()
+            })
+            .catch(err => {
+              if (err) {
+                _this.$Message.error('删除失败')
+              }
             })
         }
       })

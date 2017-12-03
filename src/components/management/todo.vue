@@ -1,4 +1,4 @@
-<<template>
+<template>
   <div class="to-do">
     <Card>
       <p slot="title">
@@ -107,7 +107,7 @@ export default {
     getToDoList () {
       let _this = this
       _this.initLoading = 'init'
-      _this.$http.get('/api/tasks')
+      _this.$http.get('/api/tasks?done=false')
         .then(res => {
           if (res.data && res.data.toDoList) {
             _this.toDoList.splice(0, _this.toDoList.length)

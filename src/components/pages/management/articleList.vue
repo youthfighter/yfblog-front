@@ -12,7 +12,6 @@
     </Card>
 </template>
 <script>
-import { getUsername } from '../../../utils/storage'
 import filters from '../../../filters/index'
 export default {
   data () {
@@ -29,7 +28,7 @@ export default {
           align: 'center',
           render: (h, params) => {
             const hidden = params.row.hidden
-            return h('span', {}, hidden ? '公开' : '私密')
+            return h('span', {}, hidden ? '私密' : '公开')
           }
         },
         {
@@ -99,9 +98,7 @@ export default {
     },
     getArticle (page = 1, size = 20) {
       let _this = this
-      let author = getUsername()
-      if (!author) _this.$router.push('/management/login')
-      this.$http.get(`/api/articles?page=${page}&size=${size}&author=${author}`)
+      this.$http.get(`/api/owner/articles?page=${page}&size=${size}`)
         .then(res => {
           if (res.data) {
             _this.data.splice(0, _this.data.length)

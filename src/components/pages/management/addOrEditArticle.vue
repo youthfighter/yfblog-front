@@ -22,7 +22,7 @@
             </p>
             <div>
               <div class="settings-item">
-                <Icon type="eye"></Icon> 公开度:&nbsp;&nbsp;&nbsp;
+                <Icon type="eye"></Icon> 私密:&nbsp;&nbsp;&nbsp;
                 <i-switch v-model="formItem.hidden">
                   <span slot="open">是</span>
                   <span slot="close">否</span>
@@ -171,7 +171,7 @@ export default {
     let _this = this
     if (id) {
       _this.formItem.id = id
-      _this.$http.get(`/api/articles/${id}`)
+      _this.$http.get(`/api/owner/articles/${id}`)
       .then(res => {
         if (res.data) {
           _this.formItem.title = res.data.title
