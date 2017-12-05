@@ -61,6 +61,10 @@ const menuTree = [
       {
         label: '标签管理',
         href: `${context}/settings/tags`
+      },
+      {
+        label: '菜单设置',
+        href: `${context}/settings/menuSettings`
       }
     ]
   },
