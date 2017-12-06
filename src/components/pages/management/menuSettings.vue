@@ -3,26 +3,18 @@
     <div class="btn-ctr">
       <Button type="primary" @click="showDialog('add')">新建子节点</Button>
       <Button type="primary" @click="showDialog('edit')">编辑节点</Button>
-      <Button type="primary" @click="upNode">上移节点</Button>
-      <Button type="primary" @click="downNode">下移节点</Button>
       <Button type="primary">删除节点</Button>
       <Button type="primary" @click="saveTree">保存页面结构</Button>
     </div>
     <div class="menu-tree">
-      <Row :gutter="16">
-        <Col span="12" class="border-right">
-          <h4 class="margin-bottom-20">页面结构树</h4>
-          <Tree :data="menuSettings" ref="menuSettingsTree"></Tree>
-        </Col>
-        <Col span="12">
-        </Col>
-      </Row>
+      <h3 class="margin-bottom-20">页面结构树</h3>
+      <Tree :data="menuSettings" ref="menuSettingsTree"></Tree>
     </div>
     <Modal 
       v-model="treeDialogShow"
       title="编辑节点"
     >
-      <Form :model="treeNodeModel" label-position="left" :label-width="60">
+      <Form :model="treeNodeModel" label-position="left" :label-width="80">
         <FormItem label="页面名称">
           <Input v-model="treeNodeModel.title"></Input>
         </FormItem>
@@ -89,15 +81,9 @@ export default {
       }
     },
     saveTree () {
+      this.removeNode()
+      console.log(this.menuSettings.find)
       console.log(this.menuSettings)
-    },
-    upNode () {
-      let selectedNode = this.getSelectedNode()
-      if (selectedNode) {
-      }
-    },
-    downNode () {
-
     },
     getSelectedNode () {
       let selectedNodes = this.$refs['menuSettingsTree'].getSelectedNodes()
@@ -105,6 +91,28 @@ export default {
         return selectedNodes[0]
       } else {
         this.$Message.error('请选择一个节点')
+      }
+    },
+    removeNode () {
+      let node = this.getSelectedNode()
+      const parentKey = this.menuSettings.find(el => {
+        console.log(el)
+        return el === node
+      })
+      console.log(parentKey)
+      /* const parent = this.menuSettings.find(el => el.nodeKey === parentKey).node
+      const index = parent.children.indexOf(data)
+      parent.children.splice(index, 1) */
+    },
+    getParentNode (node, value) {
+      if (node.children) {
+        for (let v of node.children) {
+          if (v.nodeKey === value.nodeKey) {
+            return node
+          } else {
+            this.getParentNode(v, value)
+          }
+        }
       }
     }
   }
