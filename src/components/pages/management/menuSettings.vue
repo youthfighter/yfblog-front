@@ -3,8 +3,7 @@
     <div class="btn-ctr">
       <Button type="primary" @click="showDialog('add')">新建子节点</Button>
       <Button type="primary" @click="showDialog('edit')">编辑节点</Button>
-      <Button type="primary">删除节点</Button>
-      <Button type="primary" @click="saveTree">保存页面结构</Button>
+      <Button type="primary" @click="deleteNode">删除节点</Button>
     </div>
     <div class="menu-tree">
       <h3 class="margin-bottom-20">页面结构树</h3>
@@ -42,23 +41,25 @@ export default {
       treeDialogShow: false,
       treeNodeModel: {},
       dialogType: '',
-      menuSettings: [
-        {
-          title: '根目录',
-          key: 'root',
-          expand: true
-        }
-      ]
+      menuSettings: []
     }
+  },
+  created () {
+    this.getPages()
   },
   methods: {
     showDialog (type) {
-      let selectedNodes = this.$refs['menuSettingsTree'].getSelectedNodes()
-      if (selectedNodes.length === 1) {
+      let selectedNode = this.getSelectedNode()
+      if (selectedNode) {
         if (type === 'add') {
-          this.treeNodeModel = {}
+          this.treeNodeModel = {
+            expand: true,
+            parentId: selectedNode.id,
+            parent: selectedNode,
+            index: selectedNode.children ? selectedNode.children.length : 0
+          }
         } else if (type === 'edit') {
-          this.treeNodeModel = selectedNodes[0]
+          this.treeNodeModel = (Object.assign({}, selectedNode))
         }
         this.dialogType = type
         this.treeDialogShow = true
@@ -70,20 +71,54 @@ export default {
       this.treeDialogShow = false
     },
     saveNode () {
-      let selectedNode = this.$refs['menuSettingsTree'].getSelectedNodes()[0]
-      if (this.dialogType === 'add') {
-        const children = selectedNode.children || []
-        children.push(this.treeNodeModel)
-        this.$set(selectedNode, 'children', children)
-        this.closeDialog()
-      } else if (this.dialogType === 'edit') {
+      let _this = this
+      let selectedNode = _this.getSelectedNode()
+      if (_this.dialogType === 'add') {
+        _this.$http.post('/api/page', _this.getArrayNode())
+          .then(res => {
+            selectedNode.children = selectedNode.children || []
+            _this.treeNodeModel.id = res.data.id
+            selectedNode.children.push(_this.treeNodeModel)
+          })
+          .catch(err => {
+            if (err) {
+              this.$Message.error(err.errMsg ? err.errMsg : '添加节点失败')
+            }
+          })
+        _this.closeDialog()
+      } else if (_this.dialogType === 'edit') {
+        _this.$http.put(`/api/page/${selectedNode.id}`, _this.getArrayNode())
+          .then(res => {
+            selectedNode.title = _this.treeNodeModel.title
+            selectedNode.hidden = _this.treeNodeModel.hidden
+            selectedNode.href = _this.treeNodeModel.href
+            this.$Message.info('修改成功')
+          })
+          .catch(err => {
+            if (err) {
+              _this.$Message.error(err.errMsg ? err.errMsg : '修改失败')
+            }
+          })
         this.closeDialog()
       }
     },
-    saveTree () {
-      this.removeNode()
-      console.log(this.menuSettings.find)
-      console.log(this.menuSettings)
+    deleteNode () {
+      let selectedNode = this.getSelectedNode()
+      let id = selectedNode.id
+      let _this = this
+      if (selectedNode) {
+        _this.$http.delete(`/api/page/${id}`)
+          .then(res => {
+            let parent = selectedNode.parent
+            let index = selectedNode.index
+            parent.children.splice(index, 1)
+          })
+          .catch(err => {
+            if (err) {
+              _this.$Message.error(err.errMsg ? err.errMsg : '删除节点失败')
+            }
+          })
+      }
     },
     getSelectedNode () {
       let selectedNodes = this.$refs['menuSettingsTree'].getSelectedNodes()
@@ -93,27 +128,33 @@ export default {
         this.$Message.error('请选择一个节点')
       }
     },
-    removeNode () {
-      let node = this.getSelectedNode()
-      const parentKey = this.menuSettings.find(el => {
-        console.log(el)
-        return el === node
-      })
-      console.log(parentKey)
-      /* const parent = this.menuSettings.find(el => el.nodeKey === parentKey).node
-      const index = parent.children.indexOf(data)
-      parent.children.splice(index, 1) */
+    getPages () {
+      let _this = this
+      _this.$http.get('/api/pages')
+        .then(res => {
+          _this.menuSettings = _this.jsonToTree(res.data)
+        })
+        .catch(err => {
+          _this.$Message.error(err.errMsg ? err.errMsg : '获取页面列表失败')
+        })
     },
-    getParentNode (node, value) {
-      if (node.children) {
-        for (let v of node.children) {
-          if (v.nodeKey === value.nodeKey) {
-            return node
-          } else {
-            this.getParentNode(v, value)
-          }
+    jsonToTree (data, parent = {}) {
+      let id = parent.id
+      let itemArr = []
+      for (let val of data) {
+        if (val.parentId === id) {
+          let newNode = JSON.parse(JSON.stringify(val))
+          newNode.children = this.jsonToTree(data, newNode)
+          newNode.parent = parent
+          let index = isNaN(val.index) ? 0 : val.index
+          itemArr[index] = newNode
         }
       }
+      return itemArr
+    },
+    getArrayNode () {
+      let { id, title, parentId, hidden = false, index = 0 } = this.treeNodeModel
+      return {id, title, parentId, hidden, index}
     }
   }
 }
@@ -134,6 +175,9 @@ export default {
 }
 .margin-bottom-20{
   margin-bottom: 20px;
+}
+.ivu-tree-title{
+  font-size: 14px
 }
 </style>
 
