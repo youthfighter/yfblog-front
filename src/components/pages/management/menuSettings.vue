@@ -132,7 +132,20 @@ export default {
       let _this = this
       _this.$http.get('/api/pages')
         .then(res => {
-          _this.menuSettings = _this.jsonToTree(res.data)
+          if (res.data.length === 0) {
+            _this.$http.post('/api/page', {title: '根节点'})
+              .then(res => {
+                _this.menuSettings = _this.jsonToTree([res.data])
+              })
+              .catch (err => {
+                if (err) {
+                  _this.$Message.error('初始化根节点失败')
+                }
+              })
+          } else {
+            _this.menuSettings = _this.jsonToTree([res.data])
+          }
+          
         })
         .catch(err => {
           _this.$Message.error(err.errMsg ? err.errMsg : '获取页面列表失败')
