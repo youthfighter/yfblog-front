@@ -8,6 +8,7 @@ import bgimage from '@/components/pages/management/loginBgImage'
 import taskList from '@/components/pages/management/taskList'
 import tagList from '@/components/pages/management/tagList'
 import menuSettings from '@/components/pages/management/menuSettings'
+import ssiPage from '@/components/pages/management/ssiPage'
 
 const context = '/management'
 export default [
@@ -65,5 +66,10 @@ export default [
     path: `${context}/settings/menuSettings`,
     name: 'menuSettings',
     component: menuSettings
+  },
+  {
+    path: `${context}/ssi/page`,
+    name: 'ssiPage',
+    component: ssiPage
   }
 ]

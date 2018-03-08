@@ -72,6 +72,15 @@ const menuTree = [
     label: '全部任务',
     href: `${context}/tasks`,
     hide: true
+  },
+  {
+    label: 'SSI',
+    children: [
+      {
+        label: '页面设置',
+        href: `${context}/ssi/page`
+      }
+    ]
   }
 ]
 export {

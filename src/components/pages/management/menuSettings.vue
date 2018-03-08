@@ -41,7 +41,8 @@ export default {
       treeDialogShow: false,
       treeNodeModel: {},
       dialogType: '',
-      menuSettings: []
+      menuSettings: [],
+      treeBaseDate: []
     }
   },
   created () {
@@ -124,8 +125,6 @@ export default {
       let selectedNodes = this.$refs['menuSettingsTree'].getSelectedNodes()
       if (selectedNodes.length === 1) {
         return selectedNodes[0]
-      } else {
-        this.$Message.error('请选择一个节点')
       }
     },
     getPages () {
@@ -135,35 +134,37 @@ export default {
           if (res.data.length === 0) {
             _this.$http.post('/api/page', {title: '根节点'})
               .then(res => {
-                _this.menuSettings = _this.jsonToTree([res.data])
+                _this.menuSettings = _this.arrayToTree(res.data)
               })
-              .catch (err => {
+              .catch(err => {
                 if (err) {
                   _this.$Message.error('初始化根节点失败')
                 }
               })
           } else {
-            _this.menuSettings = _this.jsonToTree([res.data])
+            console.log(res.data)
+            console.log(_this.arrayToTree(res.data))
+            _this.menuSettings = _this.arrayToTree(res.data)
           }
-          
-        })
-        .catch(err => {
+        }).catch(err => {
+          console.log(err)
           _this.$Message.error(err.errMsg ? err.errMsg : '获取页面列表失败')
         })
     },
-    jsonToTree (data, parent = {}) {
-      let id = parent.id
-      let itemArr = []
-      for (let val of data) {
-        if (val.parentId === id) {
-          let newNode = JSON.parse(JSON.stringify(val))
-          newNode.children = this.jsonToTree(data, newNode)
-          newNode.parent = parent
-          let index = isNaN(val.index) ? 0 : val.index
-          itemArr[index] = newNode
+    arrayToTree (data, parentId) {
+      let _this = this
+      let children = data.filter((value) => {
+        return value.parentId === parentId
+      })
+      if (children) {
+        for (let val of children) {
+          let c = _this.arrayToTree(data, val.id)
+          if (c && c.length > 0) {
+            val.children = c
+          }
         }
       }
-      return itemArr
+      return children
     },
     getArrayNode () {
       let { id, title, parentId, hidden = false, index = 0 } = this.treeNodeModel
